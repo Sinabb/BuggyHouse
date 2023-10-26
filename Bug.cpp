@@ -15,5 +15,6 @@ void Bug::Draw()
 	mX += static_cast<float>(rand() % 3 - 1);
 	mY += static_cast<float>(rand() % 3 - 1);
 
+
 Actor::Draw();
 }
