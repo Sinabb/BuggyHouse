@@ -6,36 +6,37 @@
 #include <wincodec.h>
 #include "com_exception.h"
 
-class BitmapManger final
+class BitmapManager final 
 {
 public:
-	static BitmapManger& Instance()
+	static BitmapManager& Instance()
 	{
-		static BitmapManger instance;
+		static BitmapManager instance;
 		return instance;
 	}
 
 private:
-	BitmapManger() {}
-	BitmapManger(const BitmapManger&) {}
-	void operator=(const BitmapManger&) {}
+	BitmapManager() {}
+	BitmapManager(const BitmapManager&) {}
+	void operator= (const BitmapManager&) {}
 
 public:
-	~BitmapManger() {}
+	~BitmapManager() {}
 
-private:
+private: 
 	ID2D1HwndRenderTarget* mpRenderTarget{};
 	Microsoft::WRL::ComPtr<IWICImagingFactory> mspWICFactory{};
 
 	std::map<std::wstring, Microsoft::WRL::ComPtr<ID2D1Bitmap>> mBitmapResources;
+
 private:
 	HRESULT LoadWICBitmap(std::wstring filename, ID2D1Bitmap** ppBitmap);
+
 public:
 	HRESULT Initialize(ID2D1HwndRenderTarget* pRT);
 	void Release();
 
 	ID2D1Bitmap* LoadBitmap(std::wstring filename);
-
 };
 
 

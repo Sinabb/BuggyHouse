@@ -77,21 +77,21 @@ HRESULT D2DFramework::CreateDeviceResources()
 HRESULT D2DFramework::Initialize(HINSTANCE hInstance, LPCWSTR title, UINT w, UINT h)
 {
     ThrowIfFailed(CoInitialize(nullptr));
-    ThrowIfFailed(InitWindow(hInstance, title, w, h), "Failed to initwindow");
+    ThrowIfFailed(InitWindow(hInstance, title, w, h), "Failed to InitWindow!");
     ThrowIfFailed(InitD2D(mHwnd), "Failed to InitD2D");
 
-    HRESULT hr = BitmapManger::Instance().Initialize(mspRenderTarget.Get());
-    ThrowIfFailed(hr, "Failed to bitmapManger initialize");
+    HRESULT hr = BitmapManager::Instance().Initialize(mspRenderTarget.Get());
+    ThrowIfFailed(hr, "Failed to BitmapManager Initialize");
 
     ShowWindow(mHwnd, SW_SHOW);
     UpdateWindow(mHwnd);
-
     return S_OK;
 }
 
 void D2DFramework::Release()
 {
-    BitmapManger::Instance().Release();
+    BitmapManager::Instance().Release();
+
     mspRenderTarget.Reset();
     mspD2DFactory.Reset();
 

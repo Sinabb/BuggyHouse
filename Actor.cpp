@@ -5,7 +5,7 @@ Actor::Actor(D2DFramework* pFramework, LPCWSTR filename) :
     mpBitmap(),
     mX(), mY(), mOpacity(1.0f)
 {
-    mpBitmap = BitmapManger::Instance().LoadBitmap(filename);
+    mpBitmap = BitmapManager::Instance().LoadBitmap(filename);
 }
 
 Actor::Actor(D2DFramework* pFramework, LPCWSTR filename, float x, float y, float opacity) :
@@ -28,8 +28,9 @@ void Actor::Draw(float x, float y, float opacity)
     {
         return;
     }
+
     auto size{ mpBitmap->GetPixelSize() };
-    D2D1_RECT_F rect{ x,y,
+    D2D1_RECT_F rect{ x, y,
         static_cast<float>(x + size.width),
         static_cast<float>(y + size.height) };
 

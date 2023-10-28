@@ -5,7 +5,7 @@
 using namespace std;
 using namespace Microsoft::WRL;
 
-HRESULT BitmapManger::LoadWICBitmap(wstring filename, ID2D1Bitmap** ppBitmap)
+HRESULT BitmapManager::LoadWICBitmap(wstring filename, ID2D1Bitmap** ppBitmap)
 {
     Microsoft::WRL::ComPtr<IWICBitmapDecoder> decoder;
     HRESULT hr;
@@ -43,41 +43,47 @@ HRESULT BitmapManger::LoadWICBitmap(wstring filename, ID2D1Bitmap** ppBitmap)
     return S_OK;
 }
 
-HRESULT BitmapManger::Initialize(ID2D1HwndRenderTarget* pRT)
+HRESULT BitmapManager::Initialize(ID2D1HwndRenderTarget* pRT)
 {
-	if (!pRT)
-	{
-		return E_FAIL;
-	}
-	mpRenderTarget = pRT;
+    if (!pRT)
+    {
+        return E_FAIL;
+    }
 
-	HRESULT hr = ::CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER,
-		IID_PPV_ARGS(mspWICFactory.GetAddressOf()));
-	ThrowIfFailed(hr,"WICFactory Failed");
-	return E_NOTIMPL;
+    mpRenderTarget = pRT;
+
+    HRESULT hr = ::CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER,
+        IID_PPV_ARGS(mspWICFactory.GetAddressOf()));
+
+    ThrowIfFailed(hr, "WICFactory Creation failed");
+
+    return hr;
 }
 
-void BitmapManger::Release()
+void BitmapManager::Release()
 {
-	mBitmapResources.clear();
-	mspWICFactory.Reset();
+    mBitmapResources.clear();
+
+    mspWICFactory.Reset();
 }
 
-ID2D1Bitmap* BitmapManger::LoadBitmap(wstring filename)
+ID2D1Bitmap* BitmapManager::LoadBitmap(wstring filename)
 {
     if (!mspWICFactory)
     {
         ThrowIfFailed(E_FAIL, "WICFactory must not null");
         return nullptr;
     }
-    auto result=  mBitmapResources.insert({filename,nullptr});
+
+    auto result = mBitmapResources.insert({ filename, nullptr });
 
     if (result.second == true)
     {
         auto spBitmap = ComPtr<ID2D1Bitmap>();
         LoadWICBitmap(filename, spBitmap.GetAddressOf());
         result.first->second = spBitmap;
-
     }
+
+
     return result.first->second.Get();
 }

@@ -1,5 +1,4 @@
 #pragma once
-
 #include <d2d1.h>
 #include <wrl/client.h>
 #include "com_exception.h"
@@ -42,7 +41,6 @@ public:
 	{
 		return mspD2DFactory.Get();
 	}
-
 	inline HWND GetHWND() const
 	{
 		return mHwnd;
