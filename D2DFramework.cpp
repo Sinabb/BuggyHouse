@@ -51,7 +51,6 @@ HRESULT D2DFramework::InitD2D(HWND hwnd)
 
     hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, mspD2DFactory.GetAddressOf());
     ThrowIfFailed(hr);
-
     hr = CreateDeviceResources();
 
     return hr;
