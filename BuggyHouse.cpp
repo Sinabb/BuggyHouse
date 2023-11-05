@@ -70,7 +70,7 @@ void BuggyHouse::CheckBugs()
         ScreenToClient(mHwnd, &pt);
 
         auto itr = std::remove_if(mBugList.begin(), mBugList.end(),
-            [&](auto& actor) 
+            [&](auto& actor)
             {
                 Bug* p = static_cast<Bug*>(actor.get());
                 p->Iscliked(pt);
@@ -83,7 +83,9 @@ void BuggyHouse::CheckBugs()
                     return false;
                 }
             }
-    );
+        );
 
-    mBugList.erase(itr,mBugList.end());
+        mBugList.erase(itr, mBugList.end());
+    }
+
 }
