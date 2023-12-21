@@ -85,6 +85,7 @@ HRESULT D2DFramework::Initialize(HINSTANCE hInstance, LPCWSTR title, UINT w, UIN
     ShowWindow(mHwnd, SW_SHOW);
     UpdateWindow(mHwnd);
     return S_OK;
+
 }
 
 void D2DFramework::Release()
